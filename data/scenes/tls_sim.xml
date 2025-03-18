@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <scene id="tls_sim" name="tls_sim">
+        
+        <part>
+            <filter type="objloader">
+                <param type="string" key="filepath" value="data/sceneparts/tree.obj" />
+                <param type="string" key="up" value="z" />
+            </filter>
+            
+            
+        </part>
+
+        <part>
+            <filter type="objloader">
+                <param type="string" key="filepath" value="data/sceneparts/groundplane.obj" />
+                <param type="string" key="up" value="z" />
+            </filter>
+            
+            
+        </part>
+    </scene>
+</document>

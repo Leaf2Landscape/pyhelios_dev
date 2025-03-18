@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<document>
+    <survey name="uav_sim" platform="data/platforms.xml#copter_linearpath"
+        scanner="data/scanners_als.xml#riegl_vux-1uav22"
+        scene="data/scenes/uav_sim.xml#uav_sim">
+        <leg>
+            <platformSettings x="0.0" y="0.0" z="60.0" onGround="false" movePerSec_m="10"
+                smoothTurn="true" slowdownEnabled="false" />
+            <scannerSettings active="true" pulseFreq_hz="200000" scanAngle_deg="90"
+                scanFreq_hz="25"
+                headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
+                trajectoryTimeInterval_s="0.001" />
+        </leg>
+        <leg>
+            <platformSettings x="0.0" y="-100.0" z="60.0" onGround="false" movePerSec_m="10"
+                smoothTurn="true" slowdownEnabled="false" />
+            <scannerSettings active="true" pulseFreq_hz="200000" scanAngle_deg="90"
+                scanFreq_hz="25"
+                headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
+                trajectoryTimeInterval_s="0.01" />
+        </leg>
+    </survey>
+</document> 

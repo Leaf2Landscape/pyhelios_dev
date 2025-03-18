@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
-    <survey name="test_survey" scene="data/scenes/test_scene.xml#test_scene" platform="data/platforms.xml#tripod" scanner="data/scanners_tls.xml#riegl_vz400">
+    <survey name="tls_sim_survey" scene="data/scenes/tls_sim.xml#tls_sim" platform="data/platforms.xml#tripod" scanner="data/scanners_tls.xml#riegl_vz400">
         <FWFSettings binSize_ns="0.2" beamSampleQuality="3" />
         <leg>
             <platformSettings x="0" y="-10" onGround="true" />
