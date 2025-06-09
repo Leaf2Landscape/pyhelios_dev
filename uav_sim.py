@@ -3,6 +3,7 @@
 import pyhelios
 from pyhelios.util import scene_writer
 import time
+from utils import export_to_raycloud
 
 if __name__ == "__main__":
     print("Creating scene writer...")
@@ -45,8 +46,8 @@ if __name__ == "__main__":
     simBuilder.setNumThreads(0)                # Sets the number of threads for simulation processing (0 means use all available)
     simBuilder.setRebuildScene(False)          # Controls whether to rebuild the scene or use cached version if available
     simBuilder.setFixedGpsTimeStart("")        # Sets the GPS start time (empty uses system time)
-    simBuilder.setLasOutput(False)             # Controls whether to output point cloud in LAS format
-    simBuilder.setLas10(False)                 # Controls whether to use LAS format version 1.0
+    simBuilder.setLasOutput(True)             # Controls whether to output point cloud in LAS format
+    simBuilder.setLas10(True)                 # Controls whether to use LAS format version 1.0
     simBuilder.setZipOutput(False)             # Controls whether to compress output files
     simBuilder.setSplitByChannel(False)        # Controls whether to create separate output files for each channel
     simBuilder.setKDTFactory(4)                # Sets the KDTree implementation type (4 = Fast SAH approximation)
@@ -104,11 +105,11 @@ if __name__ == "__main__":
     output = sim.join()
     print("Simulation results joined.")
 
-    # Create instances of vector classes by accessing 'measurements' and 'trajectories' attributes of output wrapper.
-    measurements = output.measurements
-    trajectories = output.trajectories
-
     # Get amount of points in trajectory and amount of measurements by accessing length of measurement and trajectory vectors.
-    print(f'\nNumber of measurements for sim {sim}: {len(measurements)}')
-    print(f'Number of points in trajectory for sim {sim}: {len(trajectories)}')
+    print(f'\nNumber of measurements for sim {sim}: {len(output.measurements)}')
+    print(f'Number of points in trajectory for sim {sim}: {len(output.trajectories)}')
+    
+    # Export measurements to PLY format
+    ply_output_file = f"output/{sim_name}_pointcloud.ply"
+    export_to_raycloud(output, ply_output_file)
 

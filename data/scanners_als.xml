@@ -431,5 +431,27 @@
 	<!-- ############### END Realistic Scanners (Do NOT MODIFY unless data is really wrong!!!)
 	############### -->
 
+	<!-- ##### BEGIN RIEGL VUX-120 ##### -->
+	<scanner id="riegl_vux-120"
+		accuracy_m="0.01"
+		beamDivergence_rad="0.0005"
+		name="RIEGL VUX-120"
+		optics="rotating"
+		pulseFreqs_Hz="50000,100000,200000,400000,800000,1200000"
+		pulseLength_ns="4"
+		rangeMin_m="3"
+		scanAngleMax_deg="180"
+		scanAngleEffectiveMax_deg="180"
+		scanFreqMin_Hz="10"
+		scanFreqMax_Hz="200">
+
+		<beamOrigin x="0" y="0.085" z="0.06">
+			<rot axis="x" angle_deg="90" />
+			<rot axis="z" angle_deg="90" />
+		</beamOrigin>
+		<headRotateAxis x="0" y="0" z="1" />
+	</scanner>
+	<!-- ##### END RIEGL VUX-120 ##### -->
+
 
 </document>

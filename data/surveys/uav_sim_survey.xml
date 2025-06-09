@@ -1,23 +1,67 @@
 <?xml version="1.0"?>
 <document>
     <survey name="uav_sim" platform="data/platforms.xml#copter_linearpath"
-        scanner="data/scanners_als.xml#riegl_vux-1uav22"
+        scanner="data/scanners_als.xml#riegl_vux-120"
         scene="data/scenes/uav_sim.xml#uav_sim">
+        <!-- Serpentine flight pattern - down, across, up, across -->
         <leg>
-            <platformSettings x="0.0" y="0.0" z="60.0" onGround="false" movePerSec_m="10"
+            <platformSettings x="-20.0" y="60.0" z="50.0" onGround="false" movePerSec_m="5"
                 smoothTurn="true" slowdownEnabled="false" />
-            <scannerSettings active="true" pulseFreq_hz="200000" scanAngle_deg="90"
-                scanFreq_hz="25"
+            <scannerSettings active="true" pulseFreq_hz="400000" scanAngle_deg="90"
+                scanFreq_hz="50"
                 headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
                 trajectoryTimeInterval_s="0.001" />
         </leg>
+        
+        <!-- Go down third column (x = -20) -->
         <leg>
-            <platformSettings x="0.0" y="-100.0" z="60.0" onGround="false" movePerSec_m="10"
+            <platformSettings x="-20.0" y="-60.0" z="50.0" onGround="false" movePerSec_m="5"
                 smoothTurn="true" slowdownEnabled="false" />
-            <scannerSettings active="true" pulseFreq_hz="200000" scanAngle_deg="90"
-                scanFreq_hz="25"
+            <scannerSettings active="true" pulseFreq_hz="400000" scanAngle_deg="90"
+                scanFreq_hz="50"
                 headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
-                trajectoryTimeInterval_s="0.01" />
+                trajectoryTimeInterval_s="0.001" />
         </leg>
+        
+        <!-- Move across to center column (x = 0) -->
+        <leg>
+            <platformSettings x="0.0" y="-60.0" z="50.0" onGround="false" movePerSec_m="5"
+                smoothTurn="true" slowdownEnabled="false" />
+            <scannerSettings active="true" pulseFreq_hz="400000" scanAngle_deg="90"
+                scanFreq_hz="50"
+                headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
+                trajectoryTimeInterval_s="0.001" />
+        </leg>
+        
+        <!-- Go up center column (x = 0) -->
+        <leg>
+            <platformSettings x="0.0" y="60.0" z="50.0" onGround="false" movePerSec_m="5"
+                smoothTurn="true" slowdownEnabled="false" />
+            <scannerSettings active="true" pulseFreq_hz="400000" scanAngle_deg="90"
+                scanFreq_hz="50"
+                headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
+                trajectoryTimeInterval_s="0.001" />
+        </leg>
+        
+        <!-- Move across to next column (x = 20) -->
+        <leg>
+            <platformSettings x="20.0" y="60.0" z="50.0" onGround="false" movePerSec_m="5"
+                smoothTurn="true" slowdownEnabled="false" />
+            <scannerSettings active="true" pulseFreq_hz="400000" scanAngle_deg="90"
+                scanFreq_hz="50"
+                headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
+                trajectoryTimeInterval_s="0.001" />
+        </leg>
+        
+        <!-- Go down fifth column (x = 20) -->
+        <leg>
+            <platformSettings x="20.0" y="-60.0" z="50.0" onGround="false" movePerSec_m="5"
+                smoothTurn="true" slowdownEnabled="false" />
+            <scannerSettings active="true" pulseFreq_hz="400000" scanAngle_deg="90"
+                scanFreq_hz="50"
+                headRotatePerSec_deg="0.00" headRotateStart_deg="0.00" headRotateStop_deg="0.00"
+                trajectoryTimeInterval_s="0.001" />
+        </leg>
+        
     </survey>
 </document> 
