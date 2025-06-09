@@ -10,14 +10,17 @@ if __name__ == "__main__":
 
     sim_name = "uav_sim"
 
-    box_mesh_filepath = "data/sceneparts/tree.obj"
-    box_mesh = scene_writer.create_scenepart_obj(box_mesh_filepath)
+    leaf_mesh_filepath = "data/sceneparts/003_LEAF.obj"
+    leaf_mesh = scene_writer.create_scenepart_obj(leaf_mesh_filepath)
+
+    wood_mesh_filepath = "data/sceneparts/003_WOOD.obj"
+    wood_mesh = scene_writer.create_scenepart_obj(wood_mesh_filepath)
 
     ground_mesh_filepath = "data/sceneparts/groundplane.obj"
     ground_mesh = scene_writer.create_scenepart_obj(ground_mesh_filepath)
 
     sp_list = []
-    sp_list.extend([box_mesh, ground_mesh])
+    sp_list.extend([wood_mesh, leaf_mesh, ground_mesh])
 
     print("Building the scene...")
     scene = scene_writer.build_scene(scene_id=sim_name, name=sim_name, sceneparts=sp_list)

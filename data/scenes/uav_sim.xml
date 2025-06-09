@@ -4,7 +4,16 @@
         
         <part>
             <filter type="objloader">
-                <param type="string" key="filepath" value="data/sceneparts/tree.obj" />
+                <param type="string" key="filepath" value="data/sceneparts/003_WOOD.obj" />
+                <param type="string" key="up" value="z" />
+            </filter>
+            
+            
+        </part>
+
+        <part>
+            <filter type="objloader">
+                <param type="string" key="filepath" value="data/sceneparts/003_LEAF.obj" />
                 <param type="string" key="up" value="z" />
             </filter>
             
