@@ -51,9 +51,38 @@ def run_tls_simulation(tree_file_path, output_base_dir="output"):
         f.write(scene)
     print(f"Scene written to {scene_file}.")
     
+    # Create unique survey file for this simulation
+    survey_file = f"data/surveys/{sim_name}_survey.xml"
+    print(f"Creating survey file: {survey_file}...")
+    survey_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <survey name="{sim_name}" scene="data/scenes/{sim_name}.xml#{sim_name}" platform="data/platforms.xml#tripod" scanner="data/scanners_tls.xml#riegl_vz400">
+        <FWFSettings binSize_ns="0.2" beamSampleQuality="3" />
+        <leg>
+            <platformSettings x="20" y="-20" onGround="false" />
+            <scannerSettings active="true" pulseFreq_hz="300000" scanFreq_hz="120" scanAngle_deg="100" headRotatePerSec_deg="6.0" verticalAngleMin_deg="-40.0" verticalAngleMax_deg="60" headRotateStart_deg="0" headRotateStop_deg="360" trajectoryTimeInterval_s="1.0" />
+        </leg>
+        <leg>
+            <platformSettings x="20" y="20" onGround="false" />
+            <scannerSettings active="true" pulseFreq_hz="300000" scanFreq_hz="120" scanAngle_deg="100" headRotatePerSec_deg="6.0" verticalAngleMin_deg="-40.0" verticalAngleMax_deg="60" headRotateStart_deg="0" headRotateStop_deg="360" trajectoryTimeInterval_s="1.0" />
+        </leg>    
+        <leg>
+            <platformSettings x="-20" y="20" onGround="false" />
+            <scannerSettings active="true" pulseFreq_hz="300000" scanFreq_hz="120" scanAngle_deg="100" headRotatePerSec_deg="6.0" verticalAngleMin_deg="-40.0" verticalAngleMax_deg="60" headRotateStart_deg="0" headRotateStop_deg="360" trajectoryTimeInterval_s="1.0" />
+        </leg>   
+        <leg>
+            <platformSettings x="-20" y="-20" onGround="false" />
+            <scannerSettings active="true" pulseFreq_hz="300000" scanFreq_hz="120" scanAngle_deg="100" headRotatePerSec_deg="6.0" verticalAngleMin_deg="-40.0" verticalAngleMax_deg="60" headRotateStart_deg="0" headRotateStop_deg="360" trajectoryTimeInterval_s="1.0" />
+        </leg>   
+    </survey>
+</document>'''
+    
+    with open(survey_file, "w") as f:
+        f.write(survey_content)
+    print(f"Survey file written to {survey_file}.")
+    
     # Build simulation parameters
     print("Building simulation parameters...")
-    survey_file = "data/surveys/tls_sim_survey.xml"
     simBuilder = pyhelios.SimulationBuilder(
         survey_file,
         'assets/',
@@ -62,7 +91,7 @@ def run_tls_simulation(tree_file_path, output_base_dir="output"):
     
     # Set simulation parameters (same as original)
     simBuilder.setNumThreads(0)
-    simBuilder.setRebuildScene(False)
+    simBuilder.setRebuildScene(True)
     simBuilder.setFixedGpsTimeStart("")
     simBuilder.setLasOutput(True)
     simBuilder.setLas10(True)
@@ -139,7 +168,7 @@ def main():
     print("=== Multiple Tree TLS Simulation ===")
     
     # Get all tree OBJ files from the rct_synth_trees directory
-    tree_pattern = 'data/sceneparts/rct_synth_trees/*.obj'
+    tree_pattern = 'data/sceneparts/onyxtree_diamond_leaves/*.obj'
     tree_files = glob.glob(tree_pattern)
     
     if not tree_files:
