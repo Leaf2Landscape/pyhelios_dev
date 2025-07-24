@@ -4,7 +4,7 @@ import time
 import os
 import glob
 from pathlib import Path
-from utils import export_to_raycloud, export_ascii_with_rays
+from utils import export_to_raycloud, export_ascii_with_everything
 
 
 def run_tls_simulation(tree_file_path, output_base_dir="output"):
@@ -156,7 +156,8 @@ def run_tls_simulation(tree_file_path, output_base_dir="output"):
     
     # Export additional formats to the tree-specific output directory
     ascii_output_file = output_dir / f"{tree_filename}_rays.asc"
-    export_ascii_with_rays(output, str(ascii_output_file))
+    export_ascii_with_everything(output, str(ascii_output_file))
+    export_to_raycloud(output, str(output_dir / f"{tree_filename}_raycloud.ply"))
     
     return num_measurements, num_trajectories, str(output_dir)
 

@@ -128,22 +128,20 @@ end_header
     
     print(f"PLY file exported to: {output_file}")
 
-
-def export_ascii_with_rays(measurements, output_file):
+def export_ascii_with_everything(measurements, output_file):
     """
-    Export PyHelios measurements to space-delimited text file.
-    
+    Export PyHelios measurements to space-delimited text file, writing all columns.
+
     Args:
         measurements: PyHelios measurement vector or output object
         output_file: Path to output text file
-        
-    Format: x y z nx ny nz hitObjectId (space-delimited, one point per line)
+
+    Format: All columns from measurements_array, space-delimited, one point per line.
+    Columns: [pos.x, pos.y, pos.z, ori.x, ori.y, ori.z, dir.x, dir.y, dir.z, intensity, echoWidth, NumberOfReturns, ReturnNumber, FullwaveIndex, hitObjectId, classification, gpsTime]
     """
-    import numpy as np
-    import pyhelios
-    
+
     print(f"Converting measurements to numpy array...")
-    
+
     # Handle different input types
     if hasattr(measurements, 'measurements'):
         # This is an output wrapper, extract measurements
@@ -152,39 +150,27 @@ def export_ascii_with_rays(measurements, output_file):
         # This is already a measurements vector, convert to numpy
         output_wrapper = type('obj', (object,), {'measurements': measurements, 'trajectories': []})()
         measurements_array, _ = pyhelios.outputToNumpy(output_wrapper)
-    
+
     num_points = measurements_array.shape[0]
-    print(f"Exporting {num_points} measurements to text format...")
-    
+    num_cols = measurements_array.shape[1]
+    print(f"Exporting {num_points} measurements with {num_cols} columns to text format...")
+
+    # Define column headers
+    headers = [
+        "pos.x", "pos.y", "pos.z",
+        "ori.x", "ori.y", "ori.z",
+        "dir.x", "dir.y", "dir.z",
+        "intensity", "echoWidth", "NumberOfReturns", "ReturnNumber",
+        "FullwaveIndex", "hitObjectId", "classification", "gpsTime"
+    ]
+
     with open(output_file, 'w') as f:
-        # Extract data from numpy array
-        # Columns: [pos.x, pos.y, pos.z, ori.x, ori.y, ori.z, dir.x, dir.y, dir.z, 
-        #           intensity, echoWidth, NumberOfReturns, ReturnNumber, FullwaveIndex, 
-        #           hitObjectId, classification, gpsTime]
-        positions = measurements_array[:, :3]  # x, y, z
-        directions = measurements_array[:, 6:9]  # dir.x, dir.y, dir.z (beam direction)
-        hit_object_ids = measurements_array[:, 14].astype(int)  # hitObjectId
-        
-        # Write data for each point
+        # Write header line
+        f.write(" ".join(headers) + "\n")
         for i in range(num_points):
-            # Position coordinates
-            x, y, z = positions[i]
-            
-            # Normals should point from measurement point back to sensor (reverse of beam direction)
-            nx, ny, nz = -directions[i]  # Reverse the direction
-            norm = np.sqrt(nx*nx + ny*ny + nz*nz)
-            if norm > 0:
-                nx /= norm
-                ny /= norm
-                nz /= norm
-            else:
-                # Default normal pointing up if beam direction is invalid
-                nx, ny, nz = 0.0, 0.0, 1.0
-            
-            # Get hit object ID
-            hit_id = hit_object_ids[i]
-            
-            # Write line with all values
-            f.write(f"{x:.6f} {y:.6f} {z:.6f} {nx:.6f} {ny:.6f} {nz:.6f} {hit_id}\n")
-    
+            values = measurements_array[i]
+            # Format each value with reasonable precision
+            formatted = " ".join(f"{v:.6f}" if isinstance(v, float) or isinstance(v, np.floating) else str(int(v)) for v in values)
+            f.write(formatted + "\n")
+
     print(f"Text file exported to: {output_file}")
