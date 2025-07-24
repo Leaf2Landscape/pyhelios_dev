@@ -1,44 +1,38 @@
 {
-    "name": "Helios Development Environment",
-    "image": "continuumio/miniconda3",
-
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash",
-        "python.pythonPath": "/opt/conda/envs/helios_env/bin/python",
-        "python.linting.pylintEnabled": true,
-        "python.linting.enabled": true,
-        "[json]": {  // Language-specific settings for JSON files
-            "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
-        "[jsonc]": { // Language-specific settings for JSONC (JSON with comments)
-            "editor.defaultFormatter": "esbenp.prettier-vscode"
-        }
+  "name": "Helios Development Environment",
+  "image": "continuumio/miniconda3",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "python.pythonPath": "/opt/conda/envs/helios-dev/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-
-    "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylint",
-        "ms-toolsai.jupyter",
-        "esbenp.prettier-vscode" // Prettier extension ID
-    ],
-
-    "postCreateCommand": "conda init bash && conda create -n helios_env -c conda-forge helios -y && echo 'Helios installed in helios_env environment.  Activate with: conda activate helios_env' ",
-
-    "remoteUser": "vscode",
-
-    "workspaceFolder": "/workspace",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-
-    "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {
-            "installZsh": true,
-            "configureZshAsDefaultShell": true,
-            "installOhMyZsh": true,
-            "upgradePackages": true,
-        },
-        "ghcr.io/devcontainers/features/git:1": {}
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylint",
+    "ms-toolsai.jupyter",
+    "esbenp.prettier-vscode"
+  ],
+  "postCreateCommand": "bash -c 'conda init bash && cd /workspace && rm -rf helios && git clone https://github.com/3dgeo-heidelberg/helios.git && cd helios && conda env create -f environment-dev.yml && source /opt/conda/etc/profile.d/conda.sh && conda activate helios-dev && conda install -c conda-forge gcc gxx cmake make binutils -y && python -m pip install --no-build-isolation --config-settings=build-dir=\"build\" -v -e . && echo \"Helios installed in helios-dev environment. Activate with: conda activate helios-dev\"'",
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
     },
-    "mounts": [
-      "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-    ]
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ]
 }
